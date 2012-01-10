@@ -270,7 +270,7 @@
         
       },
       
-      os: function() {
+      device: function() {
         
         var data, vendor, os, match, version;
         
@@ -353,33 +353,25 @@
               // apple has os version numbers separated by underscores,
               // so we'll have to account for that strange behavior
               version = version ? version.replace( /_/g, '.' ) : null;
-              return {
-                vendor: vendor,
-                name: os,
-                version: version
-              };
+              break;
             }
           }
+          if( match ) break;
         }
         
-        return null;
-      },
-      
-      device: function() {
-        var html  = document.documentElement,
-            body  = document.getElementsByTagName( 'body' )[0],
-            match = {
-              tablet: navigator.userAgent.match(
-                /(iPad|SCH-I800|xoom|kindle)/i
-              ),
-              phone: navigator.userAgent.match (
-                /(iPhone|iPod|blackberry|android 0.5|htc|lg|midp|mmp|mobile|nokia|opera mini|palm|pocket|psp|sgh|smartphone|symbian|treo mini|Playstation Portable|SonyEricsson|Samsung|MobileExplorer|PalmSource|Benq|Windows Phone|Windows Mobile|IEMobile|Windows CE|Nintendo Wii)/i
-              )
-            };
+        var html   = document.documentElement,
+            body   = document.getElementsByTagName( 'body' )[0],
+            tablet = !!navigator.userAgent.match( /(iPad|SCH-I800|xoom|kindle)/i ),
+            phone  = !!navigator.userAgent.match (
+              /(iPhone|iPod|blackberry|android 0.5|htc|lg|midp|mmp|mobile|nokia|opera mini|palm|pocket|psp|sgh|smartphone|symbian|treo mini|Playstation Portable|SonyEricsson|Samsung|MobileExplorer|PalmSource|Benq|Windows Phone|Windows Mobile|IEMobile|Windows CE|Nintendo Wii)/i
+            );
+        
         return {
-          // name: match.tablet ? match.tablet[0] :
-          //       match.phone ? match.phone[0] : null,
-          // version: null,
+          os: {
+            vendor: vendor || null,
+            name: os || null,
+            version: version || null
+          },
           screen: {
             width: screen.width,
             height: screen.height,
@@ -390,9 +382,9 @@
             height: screen.availHeight || window.innerHeight || html.clientHeight || body.clientHeight,
             colorDepth: screen.colorDepth || screen.pixelDepth || null
           },
-          isTablet: !!match.tablet,
-          isPhone: !this.isTablet && !!match.phone,
-          isMobile: !!match.tablet || !!match.phone
+          isTablet: tablet,
+          isPhone: !tablet && phone,
+          isMobile: tablet || phone
         };
       }
       

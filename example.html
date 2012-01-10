@@ -142,11 +142,16 @@
         useHTML5Location: false,
         useGoogleLocation: true,
         arrived: function( data ) {
+          // update with async data
           document.getElementById('dump').innerHTML = JSONf.stringify( data, undefined, 2 );
         }
       };
     </script>
     <script src="visitor.js"></script>
+    <script>
+      // instantly available data
+      document.getElementById('dump').innerHTML = JSONf.stringify( visitor, undefined, 2 );
+    </script>
     
   </body>
 </html>

@@ -378,8 +378,8 @@
             pixelRatio: window.devicePixelRatio || null
           },
           viewport: {
-            width: screen.availWidth || window.innerWidth || html.clientWidth || body.clientWidth,
-            height: screen.availHeight || window.innerHeight || html.clientHeight || body.clientHeight,
+            width: window.innerWidth || html.clientWidth || body.clientWidth || screen.availWidth,
+            height: window.innerHeight || html.clientHeight || body.clientHeight || screen.availHeight,
             colorDepth: screen.colorDepth || screen.pixelDepth || null
           },
           isTablet: tablet,

@@ -253,8 +253,9 @@
             name = checks[i]; result[name] = false;
             for( var j in navigator.plugins ) {
               plugin = navigator.plugins[j];
-              if( plugin.name && plugin.name.toLowerCase().indexOf( name ) !== -1 ) {
-                result[name] = true; break;
+              if( plugin.name && ~plugin.name.toLowerCase().indexOf( name ) ) {
+                result[name] = true;
+                break;
               }
             }
           }
